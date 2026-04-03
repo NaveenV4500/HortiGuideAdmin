@@ -1,0 +1,303 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+.device { max-width: 390px; margin: 0 auto; background: #f0f2f5; min-height: 700px; border-radius: 16px; overflow: hidden; border: 1px solid #ddd; }
+.topbar { background: #1e3a5f; color: #fff; padding: 12px 16px; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+.breadcrumb { font-size: 10px; color: #90b8d8; margin-top: 2px; font-weight: 400; }
+.tree-panel { background: #fff; max-height: 260px; overflow-y: auto; border-bottom: 2px solid #e0e0e0; }
+.tree-panel::-webkit-scrollbar { width: 3px; }
+.tree-panel::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+.ti { display: flex; align-items: center; cursor: pointer; border-bottom: 0.5px solid #f2f2f2; user-select: none; }
+.ti:hover { background: #f5f8ff; }
+.ti.active { background: #e8f0fe; border-left: 3px solid #2563eb; }
+
+.ti.n1 { padding: 10px 12px; font-size: 13px; font-weight: 700; color: #1e3a5f; background: #f7f9fc; }
+.ti.n2 { padding: 9px 12px 9px 22px; font-size: 12.5px; font-weight: 600; color: #1a56db; }
+.ti.n3 { padding: 8px 12px 8px 34px; font-size: 12px; font-weight: 500; color: #333; }
+.ti.n4 { padding: 7px 12px 7px 46px; font-size: 12px; color: #555; }
+.ti.n5 { padding: 7px 12px 7px 58px; font-size: 11.5px; color: #666; }
+.ti.n5.active { color: #1a56db; font-weight: 600; }
+
+.ch { font-size: 9px; color: #aaa; margin-right: 6px; transition: transform 0.18s; display: inline-block; flex-shrink: 0; }
+.ch.open { transform: rotate(90deg); }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; margin-right: 8px; flex-shrink: 0; }
+.dot.active { background: #2563eb; }
+.icon { font-size: 13px; margin-right: 6px; }
+
+.content { background: #fff; display: none; }
+.content.show { display: block; }
+
+.heading-bar { background: #1e3a5f; color: #fff; padding: 10px 14px; font-size: 13px; font-weight: 600; }
+.sub-heading { padding: 10px 14px; font-size: 12.5px; color: #444; background: #fafbff; border-bottom: 1px solid #eee; line-height: 1.5; }
+
+.tabs { display: flex; border-bottom: 2px solid #e0e0e0; background: #fff; }
+.tab { flex: 1; padding: 9px 4px; text-align: center; font-size: 12px; font-weight: 500; color: #888; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.tab.active { color: #2563eb; border-bottom: 2px solid #2563eb; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.writeup-area { padding: 12px 14px; }
+.writeup-area textarea { width: 100%; min-height: 100px; border: 1px solid #dde; border-radius: 8px; padding: 10px; font-size: 13px; color: #333; resize: none; outline: none; line-height: 1.6; }
+.writeup-area textarea:focus { border-color: #2563eb; }
+
+.media-section { padding: 10px 14px; border-top: 1px solid #eee; }
+.media-label { font-size: 11px; color: #888; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.media-grid { display: flex; gap: 10px; }
+.media-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; background: #f0f4ff; border: 1.5px dashed #2563eb; border-radius: 10px; padding: 12px 8px; cursor: pointer; }
+.media-btn svg { width: 20px; height: 20px; }
+.media-btn span { font-size: 11px; color: #2563eb; font-weight: 500; }
+
+.thumbs { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 14px; }
+.thumb { width: 64px; height: 64px; border-radius: 8px; background: #e8f0fe; border: 1px solid #c0d4f5; display: flex; align-items: center; justify-content: center; font-size: 22px; position: relative; cursor: pointer; }
+.thumb .del { position: absolute; top: -5px; right: -5px; width: 16px; height: 16px; background: #e24b4a; color: #fff; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+.fn-box { padding: 12px 14px; }
+.fn-item { background: #f7f9fc; border: 1px solid #e0e8f0; border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 12.5px; color: #444; line-height: 1.5; }
+.fn-add { display: flex; align-items: center; gap: 6px; color: #2563eb; font-size: 13px; font-weight: 500; cursor: pointer; padding: 6px 0; }
+
+.nav-row { display: flex; gap: 10px; padding: 12px 14px; background: #f8f9fa; border-top: 1px solid #e0e0e0; }
+.nav-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; }
+.nav-btn.prev { background: #e8f0fe; color: #1a56db; }
+.nav-btn.next { background: #2563eb; color: #fff; }
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.empty-state { padding: 40px 20px; text-align: center; color: #aaa; font-size: 13px; }
+.empty-icon { font-size: 36px; margin-bottom: 10px; }
+</style>
+
+<div class="device">
+
+  <div class="topbar">
+    <div>
+      <div>🌾 Crop Management</div>
+      <div class="breadcrumb" id="bc">Select an item from the tree</div>
+    </div>
+  </div>
+
+  <div class="tree-panel" id="tree"></div>
+
+  <div class="content" id="content">
+    <div class="heading-bar" id="itemHeading">Item Detail</div>
+    <div class="sub-heading" id="itemDesc">Description goes here</div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('writeup',this)">Write Up</div>
+      <div class="tab" onclick="switchTab('images',this)">Images</div>
+      <div class="tab" onclick="switchTab('videos',this)">Videos</div>
+      <div class="tab" onclick="switchTab('footnotes',this)">Foot Notes</div>
+    </div>
+
+    <div class="tab-content active" id="tab-writeup">
+      <div class="writeup-area">
+        <textarea placeholder="Enter write-up / observations here..."></textarea>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-images">
+      <div class="thumbs" id="thumbsContainer">
+        <div class="thumb">🌾<div class="del">×</div></div>
+        <div class="thumb">🌿<div class="del">×</div></div>
+        <div class="thumb">📷<div class="del">×</div></div>
+      </div>
+      <div class="media-section">
+        <div class="media-label">Upload Images</div>
+        <div class="media-grid">
+          <div class="media-btn" onclick="alert('Open Camera')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>Camera</span>
+          </div>
+          <div class="media-btn" onclick="alert('Open Gallery')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Gallery</span>
+          </div>
+          <div class="media-btn" onclick="alert('Upload File')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Upload</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-videos">
+      <div class="media-section" style="padding-top:16px">
+        <div class="media-label">Upload Videos</div>
+        <div class="media-grid">
+          <div class="media-btn" onclick="alert('Record Video')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><rect x="2" y="7" width="15" height="10" rx="2"/><path d="M17 9l5-2v10l-5-2V9z"/></svg>
+            <span>Record</span>
+          </div>
+          <div class="media-btn" onclick="alert('Pick from Gallery')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            <span>Gallery</span>
+          </div>
+          <div class="media-btn" onclick="alert('Upload Video')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Upload</span>
+          </div>
+        </div>
+        <div style="padding:16px 0; text-align:center; color:#bbb; font-size:12px;">No videos added yet</div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-footnotes">
+      <div class="fn-box">
+        <div class="fn-item">Ensure soil pH is tested before planting season begins.</div>
+        <div class="fn-item">Refer to state agriculture department guidelines for water limits.</div>
+        <div class="fn-add" onclick="alert('Add new foot note')">＋ Add Foot Note</div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="nav-btn prev" id="prevBtn" onclick="navigate(-1)">◀ Previous</button>
+      <button class="nav-btn next" id="nextBtn" onclick="navigate(1)">Next ▶</button>
+    </div>
+  </div>
+
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">🌱</div>
+    <div>Select an item from the tree above<br>to view details</div>
+  </div>
+
+</div>
+
+<script>
+var data = [
+  { id:'c1', name:'Cereals', icon:'🌾', children:[
+    { id:'c1i1', name:'Wheat', icon:'🌿', children:[
+      { id:'c1i1s1', name:'Soil Requirements', children:[
+        { id:'c1i1s1t1', name:'pH Level', desc:'Optimal soil pH for wheat is 6.0–7.0. Test soil before sowing.' },
+        { id:'c1i1s1t2', name:'Nutrients & Fertilizers', desc:'Apply NPK 120:60:40 kg/ha. Use organic compost for better yield.' }
+      ]},
+      { id:'c1i1s2', name:'Water Management', children:[
+        { id:'c1i1s2t1', name:'Irrigation Schedule', desc:'Wheat requires 4–6 irrigations. First at crown root stage (21 days).' },
+        { id:'c1i1s2t2', name:'Drainage', desc:'Ensure proper drainage to avoid waterlogging and root rot.' }
+      ]}
+    ]},
+    { id:'c1i2', name:'Rice', icon:'🌾', children:[
+      { id:'c1i2s1', name:'Pest Control', children:[
+        { id:'c1i2s1t1', name:'Common Pests', desc:'Brown plant hopper and stem borer are major pests. Use recommended pesticides.' },
+        { id:'c1i2s1t2', name:'Pesticide Schedule', desc:'Apply at tillering stage. Repeat after 15 days if infestation persists.' }
+      ]}
+    ]}
+  ]},
+  { id:'c2', name:'Pulses', icon:'🫘', children:[
+    { id:'c2i1', name:'Lentil', icon:'🌱', children:[
+      { id:'c2i1s1', name:'Harvesting', children:[
+        { id:'c2i1s1t1', name:'Harvest Window', desc:'Harvest when 70–80% pods turn yellow. Use sickle or combine harvester.' },
+        { id:'c2i1s1t2', name:'Post Harvest', desc:'Dry seeds to 10–12% moisture before storage to prevent fungal growth.' }
+      ]}
+    ]},
+    { id:'c2i2', name:'Chickpea', icon:'🌿', children:[
+      { id:'c2i2s1', name:'Disease Management', children:[
+        { id:'c2i2s1t1', name:'Wilt Disease', desc:'Fusarium wilt is common. Use resistant varieties and crop rotation.' }
+      ]}
+    ]}
+  ]},
+  { id:'c3', name:'Oilseeds', icon:'🌻', children:[
+    { id:'c3i1', name:'Sunflower', icon:'🌻', children:[
+      { id:'c3i1s1', name:'Planting', children:[
+        { id:'c3i1s1t1', name:'Spacing & Depth', desc:'Plant at 60×30 cm spacing. Seed depth 4–5 cm for optimum germination.' }
+      ]}
+    ]}
+  ]}
+];
+
+var allItems = [];
+var currentIdx = 0;
+var openNodes = {};
+
+function buildTree() {
+  var html = '';
+  data.forEach(function(cat) {
+    html += node(cat, 'n1', cat.icon + ' ' + cat.name, true);
+    if (openNodes[cat.id] !== false) {
+      cat.children.forEach(function(crop) {
+        html += node(crop, 'n2', '🌿 ' + crop.name, true);
+        if (openNodes[crop.id]) {
+          crop.children.forEach(function(sec) {
+            html += node(sec, 'n3', '📂 ' + sec.name, true);
+            if (openNodes[sec.id]) {
+              sec.children.forEach(function(item) {
+                allItems.push(item);
+                var isActive = (selectedId === item.id) ? 'active' : '';
+                html += '<div class="ti n5 ' + isActive + '" onclick="selectItem(\'' + item.id + '\')">'
+                  + '<span class="dot' + (isActive ? ' active' : '') + '"></span>' + item.name + '</div>';
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+  document.getElementById('tree').innerHTML = html;
+}
+
+function node(obj, cls, label, hasChildren) {
+  var isOpen = openNodes[obj.id] ? 'open' : '';
+  var ch = hasChildren ? '<span class="ch ' + isOpen + '">▶</span>' : '<span style="width:15px;display:inline-block"></span>';
+  return '<div class="ti ' + cls + '" onclick="toggle(\'' + obj.id + '\')">' + ch + label + '</div>';
+}
+
+var selectedId = null;
+
+function toggle(id) {
+  openNodes[id] = !openNodes[id];
+  allItems = [];
+  buildTree();
+}
+
+function selectItem(id) {
+  selectedId = id;
+  allItems = [];
+  buildTree();
+  var item = findItem(id);
+  if (!item) return;
+  document.getElementById('itemHeading').textContent = item.name;
+  document.getElementById('itemDesc').textContent = item.desc;
+  document.getElementById('bc').textContent = getBreadcrumb(id);
+  document.getElementById('content').className = 'content show';
+  document.getElementById('emptyState').style.display = 'none';
+  switchTab('writeup', document.querySelector('.tab'));
+  currentIdx = allItems.findIndex(function(i){ return i.id === id; });
+  updateNavBtns();
+}
+
+function findItem(id) {
+  for (var c of data) for (var cr of c.children) for (var s of cr.children) for (var it of s.children)
+    if (it.id === id) return it;
+  return null;
+}
+
+function getBreadcrumb(id) {
+  for (var c of data) for (var cr of c.children) for (var s of cr.children) for (var it of s.children)
+    if (it.id === id) return c.name + ' › ' + cr.name + ' › ' + s.name + ' › ' + it.name;
+  return '';
+}
+
+function switchTab(name, el) {
+  document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('tab-' + name).classList.add('active');
+  var tabs = document.querySelectorAll('.tab');
+  var map = { writeup:0, images:1, videos:2, footnotes:3 };
+  if (tabs[map[name]]) tabs[map[name]].classList.add('active');
+}
+
+function navigate(dir) {
+  var next = currentIdx + dir;
+  if (next < 0 || next >= allItems.length) return;
+  selectItem(allItems[next].id);
+}
+
+function updateNavBtns() {
+  document.getElementById('prevBtn').disabled = currentIdx <= 0;
+  document.getElementById('nextBtn').disabled = currentIdx >= allItems.length - 1;
+}
+
+openNodes['c1'] = true;
+openNodes['c1i1'] = true;
+openNodes['c1i1s1'] = true;
+buildTree();
+</script>
