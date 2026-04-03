@@ -1,151 +1,153 @@
 
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-.device { max-width: 390px; margin: 0 auto; background: #f0f2f5; min-height: 700px; border-radius: 16px; overflow: hidden; border: 1px solid #ddd; }
-.topbar { background: #1e3a5f; color: #fff; padding: 12px 16px; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
-.breadcrumb { font-size: 10px; color: #90b8d8; margin-top: 2px; font-weight: 400; }
-.tree-panel { background: #fff; max-height: 260px; overflow-y: auto; border-bottom: 2px solid #e0e0e0; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
+.app { max-width: 420px; margin: 0 auto; background: #f0f4f0; min-height: 700px; border-radius: 16px; overflow: hidden; border: 1px solid #d0ddd0; display: flex; flex-direction: column; }
+.topbar { background: #1a4731; color: #fff; padding: 13px 16px; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.breadcrumb { font-size: 10px; color: #86c9a0; margin-top: 3px; font-weight: 400; }
+.tree-panel { background: #fff; max-height: 270px; overflow-y: auto; border-bottom: 2px solid #c8ddc8; flex-shrink: 0; }
 .tree-panel::-webkit-scrollbar { width: 3px; }
-.tree-panel::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+.tree-panel::-webkit-scrollbar-thumb { background: #b0c8b0; border-radius: 4px; }
 
-.ti { display: flex; align-items: center; cursor: pointer; border-bottom: 0.5px solid #f2f2f2; user-select: none; }
-.ti:hover { background: #f5f8ff; }
-.ti.active { background: #e8f0fe; border-left: 3px solid #2563eb; }
+.ti { display: flex; align-items: center; cursor: pointer; border-bottom: 0.5px solid #f0f5f0; user-select: none; transition: background 0.12s; }
+.ti:active { background: #e8f5e8; }
+.ti.n1 { padding: 11px 12px; font-size: 13.5px; font-weight: 700; color: #1a4731; background: #f4faf4; }
+.ti.n2 { padding: 10px 12px 10px 20px; font-size: 13px; font-weight: 600; color: #2d7a4f; }
+.ti.n3 { padding: 9px 12px 9px 34px; font-size: 12.5px; font-weight: 500; color: #444; }
+.ti.n4 { padding: 8px 12px 8px 48px; font-size: 12px; color: #555; }
+.ti.n5 { padding: 8px 12px 8px 62px; font-size: 12px; color: #666; }
+.ti.n5.active { color: #1a7a3f; font-weight: 700; background: #e2f5e8; border-left: 3px solid #2d9b5a; }
 
-.ti.n1 { padding: 10px 12px; font-size: 13px; font-weight: 700; color: #1e3a5f; background: #f7f9fc; }
-.ti.n2 { padding: 9px 12px 9px 22px; font-size: 12.5px; font-weight: 600; color: #1a56db; }
-.ti.n3 { padding: 8px 12px 8px 34px; font-size: 12px; font-weight: 500; color: #333; }
-.ti.n4 { padding: 7px 12px 7px 46px; font-size: 12px; color: #555; }
-.ti.n5 { padding: 7px 12px 7px 58px; font-size: 11.5px; color: #666; }
-.ti.n5.active { color: #1a56db; font-weight: 600; }
-
-.ch { font-size: 9px; color: #aaa; margin-right: 6px; transition: transform 0.18s; display: inline-block; flex-shrink: 0; }
+.ch { font-size: 9px; color: #aaa; margin-right: 7px; transition: transform 0.18s; display: inline-block; flex-shrink: 0; }
 .ch.open { transform: rotate(90deg); }
-.dot { width: 6px; height: 6px; border-radius: 50%; background: #ccc; margin-right: 8px; flex-shrink: 0; }
-.dot.active { background: #2563eb; }
-.icon { font-size: 13px; margin-right: 6px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #ccc; margin-right: 9px; flex-shrink: 0; }
+.dot.active { background: #2d9b5a; }
 
-.content { background: #fff; display: none; }
-.content.show { display: block; }
+.content { flex: 1; display: none; flex-direction: column; overflow: hidden; }
+.content.show { display: flex; }
 
-.heading-bar { background: #1e3a5f; color: #fff; padding: 10px 14px; font-size: 13px; font-weight: 600; }
-.sub-heading { padding: 10px 14px; font-size: 12.5px; color: #444; background: #fafbff; border-bottom: 1px solid #eee; line-height: 1.5; }
+.heading-bar { background: #1a4731; color: #fff; padding: 11px 16px; font-size: 13.5px; font-weight: 700; flex-shrink: 0; }
+.sub-heading { padding: 11px 16px; font-size: 12.5px; color: #444; background: #f4faf4; border-bottom: 1px solid #d8ead8; line-height: 1.6; flex-shrink: 0; }
 
-.tabs { display: flex; border-bottom: 2px solid #e0e0e0; background: #fff; }
-.tab { flex: 1; padding: 9px 4px; text-align: center; font-size: 12px; font-weight: 500; color: #888; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
-.tab.active { color: #2563eb; border-bottom: 2px solid #2563eb; }
+.tabs { display: flex; border-bottom: 2px solid #d8ead8; background: #fff; flex-shrink: 0; }
+.tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 11.5px; font-weight: 500; color: #888; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.tab.active { color: #2d9b5a; border-bottom: 2px solid #2d9b5a; }
 
+.tab-scroll { flex: 1; overflow-y: auto; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-.writeup-area { padding: 12px 14px; }
-.writeup-area textarea { width: 100%; min-height: 100px; border: 1px solid #dde; border-radius: 8px; padding: 10px; font-size: 13px; color: #333; resize: none; outline: none; line-height: 1.6; }
-.writeup-area textarea:focus { border-color: #2563eb; }
+.writeup-area { padding: 14px 16px; }
+.writeup-label { font-size: 11px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.writeup-area textarea { width: 100%; min-height: 110px; border: 1px solid #c8ddc8; border-radius: 10px; padding: 12px; font-size: 13px; color: #333; resize: none; outline: none; line-height: 1.6; background: #fafffe; }
+.writeup-area textarea:focus { border-color: #2d9b5a; box-shadow: 0 0 0 2px #d4f0df; }
+.save-btn { margin: 0 16px 14px; width: calc(100% - 32px); padding: 11px; background: #1a7a3f; color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.save-btn:active { background: #145f30; }
 
-.media-section { padding: 10px 14px; border-top: 1px solid #eee; }
-.media-label { font-size: 11px; color: #888; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.media-section { padding: 14px 16px; }
+.media-label { font-size: 11px; color: #888; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
 .media-grid { display: flex; gap: 10px; }
-.media-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; background: #f0f4ff; border: 1.5px dashed #2563eb; border-radius: 10px; padding: 12px 8px; cursor: pointer; }
-.media-btn svg { width: 20px; height: 20px; }
-.media-btn span { font-size: 11px; color: #2563eb; font-weight: 500; }
+.media-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; background: #f0faf2; border: 1.5px dashed #2d9b5a; border-radius: 12px; padding: 14px 8px; cursor: pointer; }
+.media-btn:active { background: #d4f0df; }
+.media-btn svg { width: 22px; height: 22px; }
+.media-btn span { font-size: 11.5px; color: #2d9b5a; font-weight: 600; }
 
-.thumbs { display: flex; gap: 8px; flex-wrap: wrap; padding: 10px 14px; }
-.thumb { width: 64px; height: 64px; border-radius: 8px; background: #e8f0fe; border: 1px solid #c0d4f5; display: flex; align-items: center; justify-content: center; font-size: 22px; position: relative; cursor: pointer; }
-.thumb .del { position: absolute; top: -5px; right: -5px; width: 16px; height: 16px; background: #e24b4a; color: #fff; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.thumbs { display: flex; gap: 10px; flex-wrap: wrap; padding: 14px 16px 4px; }
+.thumb { width: 72px; height: 72px; border-radius: 10px; background: #e2f5e8; border: 1px solid #b0dbc0; display: flex; align-items: center; justify-content: center; font-size: 28px; position: relative; cursor: pointer; }
+.thumb .del { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; background: #e24b4a; color: #fff; border-radius: 50%; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.empty-media { padding: 24px 16px; text-align: center; color: #bbb; font-size: 13px; }
 
-.fn-box { padding: 12px 14px; }
-.fn-item { background: #f7f9fc; border: 1px solid #e0e8f0; border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 12.5px; color: #444; line-height: 1.5; }
-.fn-add { display: flex; align-items: center; gap: 6px; color: #2563eb; font-size: 13px; font-weight: 500; cursor: pointer; padding: 6px 0; }
+.fn-box { padding: 14px 16px; }
+.fn-item { background: #f4faf4; border: 1px solid #c8ddc8; border-radius: 10px; padding: 12px; margin-bottom: 10px; font-size: 12.5px; color: #444; line-height: 1.55; }
+.fn-tag { display: inline-block; background: #d4f0df; color: #1a5c35; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-bottom: 6px; }
+.fn-add { display: flex; align-items: center; gap: 6px; color: #2d9b5a; font-size: 13.5px; font-weight: 700; cursor: pointer; padding: 6px 0; }
 
-.nav-row { display: flex; gap: 10px; padding: 12px 14px; background: #f8f9fa; border-top: 1px solid #e0e0e0; }
-.nav-btn { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; }
-.nav-btn.prev { background: #e8f0fe; color: #1a56db; }
-.nav-btn.next { background: #2563eb; color: #fff; }
-.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.nav-row { display: flex; gap: 10px; padding: 12px 16px; background: #f4faf4; border-top: 1px solid #c8ddc8; flex-shrink: 0; }
+.nav-btn { flex: 1; padding: 11px; border-radius: 10px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
+.nav-btn.prev { background: #e2f5e8; color: #1a7a3f; }
+.nav-btn.prev:active { background: #c8ebd4; }
+.nav-btn.next { background: #1a7a3f; color: #fff; }
+.nav-btn.next:active { background: #145f30; }
+.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
-.empty-state { padding: 40px 20px; text-align: center; color: #aaa; font-size: 13px; }
-.empty-icon { font-size: 36px; margin-bottom: 10px; }
+.empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #aaa; font-size: 13.5px; text-align: center; line-height: 1.8; padding: 30px; }
+.empty-icon { font-size: 52px; margin-bottom: 14px; }
 </style>
 
-<div class="device">
-
+<div class="app">
   <div class="topbar">
     <div>
-      <div>🌾 Crop Management</div>
-      <div class="breadcrumb" id="bc">Select an item from the tree</div>
+      <div>🌿 Horticulture Crops</div>
+      <div class="breadcrumb" id="bc">Tap any item to view details</div>
     </div>
   </div>
 
   <div class="tree-panel" id="tree"></div>
 
   <div class="content" id="content">
-    <div class="heading-bar" id="itemHeading">Item Detail</div>
-    <div class="sub-heading" id="itemDesc">Description goes here</div>
+    <div class="heading-bar" id="itemHeading"></div>
+    <div class="sub-heading" id="itemDesc"></div>
 
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('writeup',this)">Write Up</div>
-      <div class="tab" onclick="switchTab('images',this)">Images</div>
-      <div class="tab" onclick="switchTab('videos',this)">Videos</div>
-      <div class="tab" onclick="switchTab('footnotes',this)">Foot Notes</div>
+      <div class="tab active" onclick="switchTab('writeup',0)">Write Up</div>
+      <div class="tab" onclick="switchTab('images',1)">Images</div>
+      <div class="tab" onclick="switchTab('videos',2)">Videos</div>
+      <div class="tab" onclick="switchTab('footnotes',3)">Foot Notes</div>
     </div>
 
-    <div class="tab-content active" id="tab-writeup">
-      <div class="writeup-area">
-        <textarea placeholder="Enter write-up / observations here..."></textarea>
-      </div>
-    </div>
+    <div class="tab-scroll">
 
-    <div class="tab-content" id="tab-images">
-      <div class="thumbs" id="thumbsContainer">
-        <div class="thumb">🌾<div class="del">×</div></div>
-        <div class="thumb">🌿<div class="del">×</div></div>
-        <div class="thumb">📷<div class="del">×</div></div>
+      <div class="tab-content active" id="tab-writeup">
+        <div class="writeup-area">
+          <div class="writeup-label">Observations / Notes</div>
+          <textarea id="writeupText" placeholder="Enter observations, notes or write-up here..."></textarea>
+        </div>
+        <button class="save-btn" onclick="alert('Write-up saved!')">💾 Save Write Up</button>
       </div>
-      <div class="media-section">
-        <div class="media-label">Upload Images</div>
-        <div class="media-grid">
-          <div class="media-btn" onclick="alert('Open Camera')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span>Camera</span>
-          </div>
-          <div class="media-btn" onclick="alert('Open Gallery')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span>Gallery</span>
-          </div>
-          <div class="media-btn" onclick="alert('Upload File')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span>Upload</span>
+
+      <div class="tab-content" id="tab-images">
+        <div class="thumbs" id="thumbsContainer"></div>
+        <div class="media-section">
+          <div class="media-label">Upload Images</div>
+          <div class="media-grid">
+            <div class="media-btn" onclick="alert('Open Camera')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d9b5a" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span>Camera</span>
+            </div>
+            <div class="media-btn" onclick="alert('Open Gallery')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d9b5a" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>Gallery</span>
+            </div>
+            <div class="media-btn" onclick="alert('Upload File')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d9b5a" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>Upload</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="tab-content" id="tab-videos">
-      <div class="media-section" style="padding-top:16px">
-        <div class="media-label">Upload Videos</div>
-        <div class="media-grid">
-          <div class="media-btn" onclick="alert('Record Video')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><rect x="2" y="7" width="15" height="10" rx="2"/><path d="M17 9l5-2v10l-5-2V9z"/></svg>
-            <span>Record</span>
+      <div class="tab-content" id="tab-videos">
+        <div class="media-section">
+          <div class="media-label" style="margin-top:4px">Upload Videos</div>
+          <div class="media-grid">
+            <div class="media-btn" onclick="alert('Record Video')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d9b5a" stroke-width="1.8"><rect x="2" y="7" width="15" height="10" rx="2"/><path d="M17 9l5-2v10l-5-2V9z"/></svg>
+              <span>Record</span>
+            </div>
+            <div class="media-btn" onclick="alert('Pick from Gallery')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d9b5a" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <span>Gallery</span>
+            </div>
+            <div class="media-btn" onclick="alert('Upload Video')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2d9b5a" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>Upload</span>
+            </div>
           </div>
-          <div class="media-btn" onclick="alert('Pick from Gallery')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-            <span>Gallery</span>
-          </div>
-          <div class="media-btn" onclick="alert('Upload Video')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span>Upload</span>
-          </div>
+          <div class="empty-media">No videos added yet</div>
         </div>
-        <div style="padding:16px 0; text-align:center; color:#bbb; font-size:12px;">No videos added yet</div>
       </div>
-    </div>
 
-    <div class="tab-content" id="tab-footnotes">
-      <div class="fn-box">
-        <div class="fn-item">Ensure soil pH is tested before planting season begins.</div>
-        <div class="fn-item">Refer to state agriculture department guidelines for water limits.</div>
-        <div class="fn-add" onclick="alert('Add new foot note')">＋ Add Foot Note</div>
+      <div class="tab-content" id="tab-footnotes">
+        <div class="fn-box" id="fnBox"></div>
       </div>
     </div>
 
@@ -156,74 +158,148 @@
   </div>
 
   <div class="empty-state" id="emptyState">
-    <div class="empty-icon">🌱</div>
-    <div>Select an item from the tree above<br>to view details</div>
+    <div class="empty-icon">🌸</div>
+    <div>Tap any item from the tree<br>to view its details</div>
   </div>
-
 </div>
 
 <script>
 var data = [
-  { id:'c1', name:'Cereals', icon:'🌾', children:[
-    { id:'c1i1', name:'Wheat', icon:'🌿', children:[
-      { id:'c1i1s1', name:'Soil Requirements', children:[
-        { id:'c1i1s1t1', name:'pH Level', desc:'Optimal soil pH for wheat is 6.0–7.0. Test soil before sowing.' },
-        { id:'c1i1s1t2', name:'Nutrients & Fertilizers', desc:'Apply NPK 120:60:40 kg/ha. Use organic compost for better yield.' }
+  { id:'cat1', name:'🍎 Fruits', children:[
+    { id:'f1', name:'Mango', children:[
+      { id:'f1s1', name:'Cultivation', children:[
+        { id:'f1s1i1', name:'Soil Preparation', desc:'Mango grows best in deep, well-drained loamy soil with pH 5.5–7.5. Prepare pits of 1m×1m×1m and fill with FYM and soil.', emoji:'🥭', notes:['Avoid waterlogged soils — causes root rot.','Best planting time: June–July (monsoon onset).'] },
+        { id:'f1s1i2', name:'Planting Method', desc:'Use grafted saplings for early bearing. Space at 10×10 m for regular varieties, 2.5×2.5 m for ultra-high density orchards.', emoji:'🌱', notes:['Preferably plant on raised beds in heavy soils.','Irrigate immediately after planting.'] }
       ]},
-      { id:'c1i1s2', name:'Water Management', children:[
-        { id:'c1i1s2t1', name:'Irrigation Schedule', desc:'Wheat requires 4–6 irrigations. First at crown root stage (21 days).' },
-        { id:'c1i1s2t2', name:'Drainage', desc:'Ensure proper drainage to avoid waterlogging and root rot.' }
+      { id:'f1s2', name:'Pest & Disease', children:[
+        { id:'f1s2i1', name:'Mango Hopper', desc:'Mango hopper (Idioscopus clypealis) is the most serious pest. Nymphs & adults suck sap from inflorescences reducing fruit set.', emoji:'🐛', notes:['Spray Imidacloprid 0.005% at bud burst stage.','Repeat spray after 15 days if needed.'] },
+        { id:'f1s2i2', name:'Powdery Mildew', desc:'White powdery coating on inflorescence and young fruits caused by Oidium mangiferae. Reduces fruit set drastically.', emoji:'🍄', notes:['Spray wettable sulphur 0.2% at panicle emergence.','Avoid overhead irrigation during flowering.'] }
+      ]},
+      { id:'f1s3', name:'Harvesting', children:[
+        { id:'f1s3i1', name:'Maturity Indices', desc:'Mango is mature when specific gravity exceeds 1.01–1.02, shoulder development is complete and skin colour changes from dark green to light green.', emoji:'🥭', notes:['Harvest with 5 cm stalk to prevent sap burn.','Early morning harvest recommended.'] }
       ]}
     ]},
-    { id:'c1i2', name:'Rice', icon:'🌾', children:[
-      { id:'c1i2s1', name:'Pest Control', children:[
-        { id:'c1i2s1t1', name:'Common Pests', desc:'Brown plant hopper and stem borer are major pests. Use recommended pesticides.' },
-        { id:'c1i2s1t2', name:'Pesticide Schedule', desc:'Apply at tillering stage. Repeat after 15 days if infestation persists.' }
+    { id:'f2', name:'Banana', children:[
+      { id:'f2s1', name:'Cultivation', children:[
+        { id:'f2s1i1', name:'Sucker Selection', desc:'Select sword suckers of 45–60 cm height with a narrow base. Corm weevil-free suckers give best results. Treat with Chlorpyriphos before planting.', emoji:'🍌', notes:['Sword suckers preferred over water suckers.','Dip suckers in 0.1% Carbendazim for 30 mins.'] },
+        { id:'f2s1i2', name:'Irrigation & Fertigation', desc:'Banana requires 1800–2000 mm water annually. Use drip irrigation with 100% RDF through fertigation. Apply N:P:K @ 200:60:300 g/plant/year.', emoji:'💧', notes:['Drip saves 40% water over flood irrigation.','Split N fertilizer into 4–5 doses.'] }
+      ]},
+      { id:'f2s2', name:'Post Harvest', children:[
+        { id:'f2s2i1', name:'Ripening & Storage', desc:'Ripen bananas using ethylene (100 ppm) at 18–22°C with 85–90% RH for 48–72 hours. Store green bananas at 13–14°C.', emoji:'🍌', notes:['Never store below 12°C — chilling injury occurs.','Pack in ventilated CFB boxes for transport.'] }
+      ]}
+    ]},
+    { id:'f3', name:'Papaya', children:[
+      { id:'f3s1', name:'Cultivation', children:[
+        { id:'f3s1i1', name:'Nursery & Transplanting', desc:'Raise nursery in protrays using sterilised coco peat. Transplant 25–30 day old seedlings at 1.8×1.8 m spacing. Maintain 10% male plants.', emoji:'🍈', notes:['Use gynoecious varieties for high yield.','Apply basal dose of FYM 10 kg/pit before planting.'] }
       ]}
     ]}
   ]},
-  { id:'c2', name:'Pulses', icon:'🫘', children:[
-    { id:'c2i1', name:'Lentil', icon:'🌱', children:[
-      { id:'c2i1s1', name:'Harvesting', children:[
-        { id:'c2i1s1t1', name:'Harvest Window', desc:'Harvest when 70–80% pods turn yellow. Use sickle or combine harvester.' },
-        { id:'c2i1s1t2', name:'Post Harvest', desc:'Dry seeds to 10–12% moisture before storage to prevent fungal growth.' }
+  { id:'cat2', name:'🥦 Vegetables', children:[
+    { id:'v1', name:'Tomato', children:[
+      { id:'v1s1', name:'Nursery Management', children:[
+        { id:'v1s1i1', name:'Seed Treatment', desc:'Treat seeds with Trichoderma viride 4 g/kg seed + Carbendazim 2 g/kg to prevent damping off. Sow in protrays with coco peat medium.', emoji:'🍅', notes:['Maintain nursery temp 22–28°C.','Harden seedlings 7 days before transplanting.'] },
+        { id:'v1s1i2', name:'Transplanting', desc:'Transplant 25–30 day old seedlings on ridges at 60×45 cm spacing. Drench soil with Metalaxyl 0.2% before transplanting to control Pythium.', emoji:'🌱', notes:['Avoid transplanting in afternoon heat.','Apply Azospirillum 2 kg/ha as soil application.'] }
+      ]},
+      { id:'v1s2', name:'Pest Management', children:[
+        { id:'v1s2i1', name:'Fruit Borer', desc:'Helicoverpa armigera bores into fruits causing up to 70% loss. Use pheromone traps @ 5/ha to monitor adult moths. Spray Spinosad 0.01% at egg hatching.', emoji:'🐛', notes:['Set pheromone traps at knee height.','Collect and destroy damaged fruits regularly.'] },
+        { id:'v1s2i2', name:'Leaf Curl Virus', desc:'Tomato Leaf Curl Virus (ToLCV) spread by whitefly causes severe leaf curling and stunting. Use virus-free certified seeds and control whitefly vectors.', emoji:'🦠', notes:['Remove and destroy infected plants immediately.','Use yellow sticky traps @ 10/ha to monitor whitefly.'] }
       ]}
     ]},
-    { id:'c2i2', name:'Chickpea', icon:'🌿', children:[
-      { id:'c2i2s1', name:'Disease Management', children:[
-        { id:'c2i2s1t1', name:'Wilt Disease', desc:'Fusarium wilt is common. Use resistant varieties and crop rotation.' }
+    { id:'v2', name:'Brinjal', children:[
+      { id:'v2s1', name:'Cultivation', children:[
+        { id:'v2s1i1', name:'Variety Selection', desc:'Choose varieties based on market preference — long purple (Pusa Purple Long), round green (Arka Nidhi). Hybrid varieties give 40–50% higher yield.', emoji:'🍆', notes:['Hybrids recommended for commercial cultivation.','Check disease resistance before variety selection.'] }
+      ]},
+      { id:'v2s2', name:'Shoot & Fruit Borer', children:[
+        { id:'v2s2i1', name:'Management', desc:'Leucinodes orbonalis is the key pest of brinjal. Borer causes 60–70% fruit damage. Remove and destroy affected shoots weekly. Use Bacillus thuringiensis sprays.', emoji:'🐛', notes:['Plant barrier crops of coriander around field.','Install pheromone traps @ 5/ha for monitoring.'] }
+      ]}
+    ]},
+    { id:'v3', name:'Bhendi (Okra)', children:[
+      { id:'v3s1', name:'Cultivation', children:[
+        { id:'v3s1i1', name:'Sowing & Spacing', desc:'Direct seed okra at 45×30 cm spacing. Soak seeds in water for 12 hours before sowing to improve germination. Apply 15 t/ha FYM during field prep.', emoji:'🥬', notes:['Optimum germination temp: 25–35°C.','Apply starter dose of N at sowing.'] }
       ]}
     ]}
   ]},
-  { id:'c3', name:'Oilseeds', icon:'🌻', children:[
-    { id:'c3i1', name:'Sunflower', icon:'🌻', children:[
-      { id:'c3i1s1', name:'Planting', children:[
-        { id:'c3i1s1t1', name:'Spacing & Depth', desc:'Plant at 60×30 cm spacing. Seed depth 4–5 cm for optimum germination.' }
+  { id:'cat3', name:'🌸 Flowers', children:[
+    { id:'fl1', name:'Rose', children:[
+      { id:'fl1s1', name:'Cultivation', children:[
+        { id:'fl1s1i1', name:'Planting & Pruning', desc:'Plant budded rose plants at 60×45 cm in raised beds. Hard prune in October for north Indian conditions. Remove all old wood, dead canes and weak shoots.', emoji:'🌹', notes:['Apply 500 g FYM + 100 g bone meal per plant after pruning.','Irrigate immediately after planting.'] },
+        { id:'fl1s1i2', name:'Training & Staking', desc:'Stake each plant with bamboo canes to support upright growth. For cut flower production train to single stem. Remove lateral buds (disbudding) for premium blooms.', emoji:'🌹', notes:['Disbud when lateral buds are pea-sized.','Cut stems at 45° angle in early morning.'] }
+      ]},
+      { id:'fl1s2', name:'Disease Management', children:[
+        { id:'fl1s2i1', name:'Black Spot', desc:'Diplocarpon rosae causes black circular spots on leaves with yellow halos leading to defoliation. Most serious disease in humid conditions. Spray Mancozeb 0.25% weekly.', emoji:'🍄', notes:['Remove and destroy fallen infected leaves.','Avoid wetting foliage during irrigation.'] }
+      ]}
+    ]},
+    { id:'fl2', name:'Marigold', children:[
+      { id:'fl2s1', name:'Cultivation', children:[
+        { id:'fl2s1i1', name:'Nursery & Transplanting', desc:'Raise nursery in protrays. Transplant 20–25 day seedlings at 45×30 cm for African marigold, 30×20 cm for French. Apply 20 t/ha FYM before transplanting.', emoji:'🌼', notes:['Pinch seedlings at 4–5 leaf stage to promote branching.','First flowering in 60–70 days after transplanting.'] },
+        { id:'fl2s1i2', name:'Harvesting', desc:'Harvest flowers at full bloom stage in cool morning hours. Yield of 15–20 t/ha loose flowers in African marigold. Flowers used for garland making and oleoresin extraction.', emoji:'🌼', notes:['Post-harvest dip in 200 ppm STS improves vase life.','Store at 2–4°C for 5–7 days.'] }
+      ]}
+    ]},
+    { id:'fl3', name:'Jasmine', children:[
+      { id:'fl3s1', name:'Cultivation', children:[
+        { id:'fl3s1i1', name:'Propagation & Planting', desc:'Propagate through semi-hardwood cuttings 15–20 cm long. Plant at 1.5×1.5 m spacing in pits of 45×45×45 cm filled with FYM. Train on bower or trellis system.', emoji:'🌸', notes:['Best planting: June–July or February–March.','Apply 50 g N per plant in 4 split doses.'] }
+      ]}
+    ]}
+  ]},
+  { id:'cat4', name:'🌿 Spices', children:[
+    { id:'sp1', name:'Turmeric', children:[
+      { id:'sp1s1', name:'Cultivation', children:[
+        { id:'sp1s1i1', name:'Rhizome Selection & Planting', desc:'Select healthy mother rhizomes of 20–25 g weight. Treat with Mancozeb 0.3% + Quinalphos 0.075% for 30 min before planting. Plant at 45×20 cm spacing.', emoji:'🟡', notes:['Prefer short duration varieties for rainfed conditions.','Plant at onset of monsoon for best results.'] },
+        { id:'sp1s1i2', name:'Earthing Up & Mulching', desc:'Do first earthing up at 60 days, second at 90 days after planting. Mulch with paddy straw or dry leaves @ 10 t/ha immediately after planting to conserve moisture.', emoji:'🌱', notes:['Mulching reduces weed growth by 60%.','Earthing up improves rhizome development.'] }
+      ]},
+      { id:'sp1s2', name:'Post Harvest', children:[
+        { id:'sp1s2i1', name:'Curing & Polishing', desc:'Boil fresh rhizomes in water for 45–60 minutes till soft. Dry in sun for 10–15 days to 8–10% moisture. Polish in rotating drums to give attractive yellow colour.', emoji:'🟡', notes:['Cured turmeric recovery is 20–25% of fresh weight.','Store in cool dry place to prevent mould.'] }
+      ]}
+    ]},
+    { id:'sp2', name:'Chilli', children:[
+      { id:'sp2s1', name:'Cultivation', children:[
+        { id:'sp2s1i1', name:'Seed Treatment & Nursery', desc:'Treat seeds with Trichoderma viride 4 g/kg + Carbendazim 2 g/kg. Sow in raised nursery beds. Maintain moisture. Transplant 30–35 day old seedlings at 60×45 cm.', emoji:'🌶️', notes:['Harden nursery by reducing irrigation 5 days before transplanting.','Use virus-free certified seeds.'] }
+      ]},
+      { id:'sp2s2', name:'Pest Management', children:[
+        { id:'sp2s2i1', name:'Thrips & Mites', desc:'Scirtothrips dorsalis causes upward curling of leaves and silvering. Tetranychus urticae causes bronzing. Both are severe in dry weather. Use Spiromesifen 0.009% for mites.', emoji:'🐛', notes:['Spray during cooler parts of day for better efficacy.','Alternate insecticides to prevent resistance.'] }
       ]}
     ]}
   ]}
 ];
 
-var allItems = [];
+var openNodes = { cat1: true, f1: true, f1s1: true };
+var selectedId = null;
+var allLeafItems = [];
 var currentIdx = 0;
-var openNodes = {};
+
+function collectLeaves() {
+  allLeafItems = [];
+  data.forEach(function(cat) {
+    if (!openNodes[cat.id]) return;
+    cat.children.forEach(function(crop) {
+      if (!openNodes[crop.id]) return;
+      crop.children.forEach(function(sec) {
+        if (!openNodes[sec.id]) return;
+        sec.children.forEach(function(item) { allLeafItems.push(item); });
+      });
+    });
+  });
+}
 
 function buildTree() {
+  collectLeaves();
   var html = '';
   data.forEach(function(cat) {
-    html += node(cat, 'n1', cat.icon + ' ' + cat.name, true);
-    if (openNodes[cat.id] !== false) {
+    var o = openNodes[cat.id];
+    html += row('n1', cat.id, cat.name, o, true);
+    if (o) {
       cat.children.forEach(function(crop) {
-        html += node(crop, 'n2', '🌿 ' + crop.name, true);
-        if (openNodes[crop.id]) {
+        var o2 = openNodes[crop.id];
+        html += row('n2', crop.id, '🌿 ' + crop.name, o2, true);
+        if (o2) {
           crop.children.forEach(function(sec) {
-            html += node(sec, 'n3', '📂 ' + sec.name, true);
-            if (openNodes[sec.id]) {
+            var o3 = openNodes[sec.id];
+            html += row('n3', sec.id, '📂 ' + sec.name, o3, true);
+            if (o3) {
               sec.children.forEach(function(item) {
-                allItems.push(item);
-                var isActive = (selectedId === item.id) ? 'active' : '';
-                html += '<div class="ti n5 ' + isActive + '" onclick="selectItem(\'' + item.id + '\')">'
-                  + '<span class="dot' + (isActive ? ' active' : '') + '"></span>' + item.name + '</div>';
+                var act = selectedId === item.id;
+                html += '<div class="ti n5' + (act ? ' active' : '') + '" onclick="selectItem(\'' + item.id + '\')">'
+                  + '<span class="dot' + (act ? ' active' : '') + '"></span>' + item.emoji + ' ' + item.name + '</div>';
               });
             }
           });
@@ -234,35 +310,12 @@ function buildTree() {
   document.getElementById('tree').innerHTML = html;
 }
 
-function node(obj, cls, label, hasChildren) {
-  var isOpen = openNodes[obj.id] ? 'open' : '';
-  var ch = hasChildren ? '<span class="ch ' + isOpen + '">▶</span>' : '<span style="width:15px;display:inline-block"></span>';
-  return '<div class="ti ' + cls + '" onclick="toggle(\'' + obj.id + '\')">' + ch + label + '</div>';
+function row(cls, id, label, isOpen, hasChildren) {
+  var ch = hasChildren ? '<span class="ch' + (isOpen ? ' open' : '') + '">▶</span>' : '<span style="width:16px;display:inline-block"></span>';
+  return '<div class="ti ' + cls + '" onclick="toggle(\'' + id + '\')">' + ch + label + '</div>';
 }
 
-var selectedId = null;
-
-function toggle(id) {
-  openNodes[id] = !openNodes[id];
-  allItems = [];
-  buildTree();
-}
-
-function selectItem(id) {
-  selectedId = id;
-  allItems = [];
-  buildTree();
-  var item = findItem(id);
-  if (!item) return;
-  document.getElementById('itemHeading').textContent = item.name;
-  document.getElementById('itemDesc').textContent = item.desc;
-  document.getElementById('bc').textContent = getBreadcrumb(id);
-  document.getElementById('content').className = 'content show';
-  document.getElementById('emptyState').style.display = 'none';
-  switchTab('writeup', document.querySelector('.tab'));
-  currentIdx = allItems.findIndex(function(i){ return i.id === id; });
-  updateNavBtns();
-}
+function toggle(id) { openNodes[id] = !openNodes[id]; buildTree(); }
 
 function findItem(id) {
   for (var c of data) for (var cr of c.children) for (var s of cr.children) for (var it of s.children)
@@ -272,32 +325,53 @@ function findItem(id) {
 
 function getBreadcrumb(id) {
   for (var c of data) for (var cr of c.children) for (var s of cr.children) for (var it of s.children)
-    if (it.id === id) return c.name + ' › ' + cr.name + ' › ' + s.name + ' › ' + it.name;
+    if (it.id === id) return cr.name + ' › ' + s.name;
   return '';
 }
 
-function switchTab(name, el) {
-  document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+function selectItem(id) {
+  selectedId = id;
+  buildTree();
+  var item = findItem(id);
+  if (!item) return;
+  document.getElementById('itemHeading').textContent = item.emoji + '  ' + item.name;
+  document.getElementById('itemDesc').textContent = item.desc;
+  document.getElementById('bc').textContent = getBreadcrumb(id);
+  document.getElementById('content').className = 'content show';
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('writeupText').value = '';
+
+  var tc = document.getElementById('thumbsContainer');
+  tc.innerHTML = item.emoji
+    ? '<div class="thumb">' + item.emoji + '<div class="del" onclick="this.parentElement.remove()">×</div></div>'
+    : '';
+
+  var fnBox = document.getElementById('fnBox');
+  fnBox.innerHTML = '';
+  (item.notes || []).forEach(function(n) {
+    fnBox.innerHTML += '<div class="fn-item"><span class="fn-tag">NOTE</span><br>' + n + '</div>';
+  });
+  fnBox.innerHTML += '<div class="fn-add" onclick="alert(\'Add foot note\')">＋ Add Foot Note</div>';
+
+  switchTab('writeup', 0);
+  currentIdx = allLeafItems.findIndex(function(i) { return i.id === id; });
+  document.getElementById('prevBtn').disabled = currentIdx <= 0;
+  document.getElementById('nextBtn').disabled = currentIdx >= allLeafItems.length - 1;
+}
+
+function switchTab(name, idx) {
+  document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
   document.getElementById('tab-' + name).classList.add('active');
-  var tabs = document.querySelectorAll('.tab');
-  var map = { writeup:0, images:1, videos:2, footnotes:3 };
-  if (tabs[map[name]]) tabs[map[name]].classList.add('active');
+  document.querySelectorAll('.tab')[idx].classList.add('active');
 }
 
 function navigate(dir) {
   var next = currentIdx + dir;
-  if (next < 0 || next >= allItems.length) return;
-  selectItem(allItems[next].id);
+  collectLeaves();
+  if (next < 0 || next >= allLeafItems.length) return;
+  selectItem(allLeafItems[next].id);
 }
 
-function updateNavBtns() {
-  document.getElementById('prevBtn').disabled = currentIdx <= 0;
-  document.getElementById('nextBtn').disabled = currentIdx >= allItems.length - 1;
-}
-
-openNodes['c1'] = true;
-openNodes['c1i1'] = true;
-openNodes['c1i1s1'] = true;
 buildTree();
 </script>
